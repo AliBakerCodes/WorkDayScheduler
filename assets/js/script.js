@@ -25,10 +25,12 @@ function buildCalendar() { //Loop through calendar object and render the calenda
         } else {
             rowColor='present';
         }
+        var rowEl = document.createElement('tr')
+        rowEl.classList.add(rowColor) ;
         //Dynamically generate the entire row html complete with classes and append to table body
-        var wholeRow='<tr class="'+ rowColor +'"><th id="hour-' + ele.hour +'" scope="row">' + rowHour +'</th><td class="editable" contentEditable=true>'+ ele.task + '</td><td><div class="text-center"><button class="save btn btn-primary" type="button"><i fill="currentColor" class="bi bi-save-fill"></i></button><button class="copy btn btn-secondary" type="button"><i fill="currentColor" class="bi bi-clipboard2-plus-fill"></i></button><button class="clear btn btn-danger" type="button"><i fill="currentColor" class="bi bi-trash-fill"></i></button></div></td></tr>';
+        rowEl.innerHTML=`<td id="hour-${ele.hour}" class="col-2">${rowHour}</td><td class="editable col-9" contentEditable=true>${ele.task}</td><td class="col-1"><div class="text-center"><button class="save btn btn-primary" type="button"><i fill="currentColor" class="bi bi-save-fill"></i></button><button class="copy btn btn-secondary" type="button"><i fill="currentColor" class="bi bi-clipboard2-plus-fill"></i></button><button class="clear btn btn-danger" type="button"><i fill="currentColor" class="bi bi-trash-fill"></i></button></div></td></tr>`;
 
-        calenderEl.append(wholeRow);
+        calenderEl.append(rowEl);
     }); 
 }
 
@@ -100,16 +102,23 @@ function getTask(){ //Check if there is a stored calendar in localStorage. If so
 //Each click on a button gets the index of the row which corresponds with
 //the index of the content in the Calendar object. Passes index to respective function
 function setEventListeners() {
-  $('.save').click(function(event) { //Save button click
+  calenderEl.on('click', 'button', function(event) { //Save button click
+    
+    var target = $(event.currentTarget)
+    console.log(target)
+    if(target.hasClass('save')){
+        console.log("Save Click")
         saveTask($('.save').index(this)); 
         storeTask(); //Store to local storage
+        } else if(target.hasClass('clear')) {
+            console.log("Clear Click")
+            clearTask($('.clear').index(this));
+        } else if(target.hasClass('copy')) {
+            console.log("Copy Click")
+            copyTask($('.copy').index(this));
+        }       
   });
-  $('.clear').click(function(event) { //Clear button click
-    clearTask($('.clear').index(this));
-});
-$('.copy').click(function(event) { //Copy button click
-    copyTask($('.copy').index(this));
-});
+  
 }
 
 init();
