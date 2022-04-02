@@ -1,5 +1,5 @@
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   font-size: 16px;
   line-height: 1;
 }
@@ -71,11 +71,11 @@ textarea {
 }
 
 table {
-  table-layout:fixed;
+  table-layout: fixed;
 }
 
 table button {
-  margin:0px 10px 10px;
+  margin: 0px 10px 10px;
 }
 
 table .editable {
