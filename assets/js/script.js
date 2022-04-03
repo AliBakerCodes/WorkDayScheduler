@@ -3,11 +3,12 @@ var calenderEl = $("#calendar");
 var currentDayEl = $("#currentDay");
 var saveEl = $(".save");
 var calenderObj; //Globably declared so can be initialized on first run or get from localStorage
-
+var currentTimeEl = $('#currentTime')
 // Functions
 function init() {
   //Run on page load
   $(currentDayEl).text(moment().format("dddd MMM DD, YYYY")); //Show date at the top
+  $(currentTimeEl).text(moment().format("h:mm A"));
   getTask(); //Look for saved data
   storeTask(); //Try to save data
   buildCalendar(); //Render the calendar
